@@ -1,0 +1,52 @@
+create database db_vendas_veiculos;
+use db_vendas_veiculos;
+
+create table funcionarios 
+(
+id int unsigned not null auto_increment,
+nome_funcionario varchar(45) not null,
+salario double not null default '0',
+departamento varchar(45) not null,
+primary key(id)
+);
+
+create table cliente
+(
+
+id_clientes int unsigned not null auto_increment,
+nome varchar(45) not null,
+cnh varchar(20),
+tipo_cliente varchar(15) not null,
+check (tipo_cliente in ('Fisica', 'juridica')),
+cartão varchar(16), 
+primary key(id_clientes)
+);
+
+create table veiculos
+(
+
+id_veiculo int unsigned not null auto_increment,
+marca varchar(45) not null,
+placa varchar(7) not null unique,
+valor double not null,
+modelo varchar(30) not null,
+ano int unsigned not null,
+primary key(id_veiculo)
+
+);
+
+create table veiculo_venda
+(
+ id_vendas int unsigned not null auto_increment,
+ valor_venda double not null,
+ veiculo_id int unsigned not null,
+ cliente_id int unsigned not null,
+ funcionario_id int unsigned not null,
+ data_venda date not null, 
+ primary key(id_vendas),
+ constraint fk_veiculo_id foreign key (veiculo_id) references veiculos (id_veiculo),
+ constraint fk_cliente_id foreign key (cliente_id) references cliente (id_clientes),
+ constraint fk_funcionario_id foreign key (funcionario_id) references funcionarios(id)
+ 
+ 
+);
